@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "qbshell.h"
+#define MAX_ARGUMENTS 100
 /**
- * parse_input - Tokenizes the input line into individual arguments
+ * parse_cmd - Tokenizes the input line into individual arguments
  * @line: The input line to be parsed.
  * @args: An array of character pointers to store the arguments.
  * @argc: A pointer to an integer to store the number of arguments found.
  */
-
-#define MAX_ARGUMENTS 100
 
 void parse_cmd(const char *line, char *args[], int *argc)
 {
@@ -28,13 +27,13 @@ void parse_cmd(const char *line, char *args[], int *argc)
 	*argc = 0;
 	token = strtok(command_copy, delimiter);
 
-	while (token != NULL && *argc < (MAX_ARGUMENTS - 1))
+	while (token != NULL && *argc < (MAX_ARGUMENTS))
 	{
 		args[*argc] = (char *)malloc(strlen(token) + 1); /* change to qb_strlen()*/
-		if (args[*argc] == NULL) 
+		if (args[*argc] == NULL)
 		{
 			perror("Parse Command Input: Memory allocation error");
-			for (i = 0; i < *argc;i++)
+			for (i = 0; i < *argc; i++)
 			{
 				free(args[i]);
 			}

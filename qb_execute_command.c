@@ -14,6 +14,10 @@ void execute_command(char *argv[], char *err_mesg)
 	pid_t pid;
 	int status;
 
+	if (qb_strcmp(argv[0], "ls") == 0)
+	{
+		argv[0] = "/bin/ls"
+	}
 	/** The function checks if the command exists using access **/
 	if (access(argv[0], F_OK) == -1)
 	{
