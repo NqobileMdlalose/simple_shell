@@ -8,7 +8,7 @@
 #include <string.h>
 
 /* Function Declarations*/
-
+void parse_cmd(const char *line, char *args[], int *argc)
 
 /*Built-ins*/
 
@@ -20,4 +20,3 @@
 extern char **environ;
 void execute_command(char *args[], char *err_mesg);
 #endif
->>>>>>> 483660694a7681b26ed55f836259f4f73ffd3bf8

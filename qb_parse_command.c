@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "qbshell.h"
 /**
  * parse_input - Tokenizes the input line into individual arguments
  * @line: The input line to be parsed.
