@@ -29,7 +29,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 
 	while (token != NULL && *argc < (MAX_ARGUMENTS))
 	{
-		args[*argc] = (char *)malloc(qb_strlen(token) + 1); /* change to qb_strlen()*/
+		args[*argc] = (char *)malloc(qb_strlen(token) + 1);
 		if (args[*argc] == NULL)
 		{
 			perror("Parse Command Input: Memory allocation error");
