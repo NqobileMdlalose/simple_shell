@@ -14,7 +14,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 {
 	char *token, *command_copy = NULL;
 	const char *delimiter = " \n";
-	size_t line_length = strlen(line); /*change to qb_strlen()*/
+	size_t line_length = qb_strlen(line); /*change to qb_strlen()*/
 	int i;
 
 	command_copy = (char *)malloc(line_length + 1);
@@ -23,13 +23,13 @@ void parse_cmd(const char *line, char *args[], int *argc)
 		perror("Parse Command Input: Memory allocation error");
 		return;
 	}
-	strcpy(command_copy, line); /* copy input line to command_copy*/
+	qb_strcpy(command_copy, line); /* copy input line to command_copy*/
 	*argc = 0;
 	token = strtok(command_copy, delimiter);
 
 	while (token != NULL && *argc < (MAX_ARGUMENTS))
 	{
-		args[*argc] = (char *)malloc(strlen(token) + 1); /* change to qb_strlen()*/
+		args[*argc] = (char *)malloc(qb_strlen(token) + 1); /* change to qb_strlen()*/
 		if (args[*argc] == NULL)
 		{
 			perror("Parse Command Input: Memory allocation error");
@@ -41,7 +41,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 			free(command_copy);
 			return;
 		}
-		strcpy(args[*argc], token); /*change to qb_strcpy()*/
+		qb_strcpy(args[*argc], token); /*change to qb_strcpy()*/
 		(*argc)++;
 		token = strtok(NULL, delimiter);
 	}
