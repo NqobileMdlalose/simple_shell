@@ -9,4 +9,5 @@ void execute_command(char *args[], char *err_mesg);
 char *qb_strcpy(char *dest, const char *src);
 int qb_strlen(const char *string);
 void print_environment(void);
+int qb_atoi(const char *str);
 #endif
