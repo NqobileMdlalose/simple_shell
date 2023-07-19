@@ -5,16 +5,19 @@
 #include <stdio.h>
 #define MAX_COMMAND_LENGTH 100
 
+/**
+ * run_shell - runs the shell.
+ */
 void run_shell(void)
 {
-	int argc;	
+	int argc;
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read_len;
 	char *args[MAX_COMMAND_LENGTH];
 	char *err_mesg = "Shell";
 	const char *prompt = "$ ";
-	const char *new_prompt = "\n"; 
+	const char *new_prompt = "\n";
 
 	while (1)
 	{
