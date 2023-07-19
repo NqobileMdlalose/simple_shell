@@ -16,8 +16,10 @@ void run_shell(void)
 
     while (1) {
         if (isatty(STDIN_FILENO))
-            printf("$");
-
+       {
+	 const char *prompt = "$ ";
+         write(STDOUT_FILENO, prompt, qb_strlen(prompt));
+       }
         fflush(stdout);
 
         read_len = getline(&line, &len, stdin);
