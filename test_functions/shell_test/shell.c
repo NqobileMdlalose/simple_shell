@@ -25,7 +25,8 @@ void run_shell(void)
         read_len = getline(&line, &len, stdin);
         if (read_len == -1) {
             free(line);
-	    printf("\n");
+	    const char *new_prompt = "\n";
+	    write(STDOUT_FILENO, new_prompt, qb_strlen(new_prompt));
             exit(EXIT_SUCCESS);
         }
 
