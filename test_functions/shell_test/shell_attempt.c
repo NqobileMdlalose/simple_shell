@@ -2,16 +2,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-
+#include "qbshell.h"
 #define MAX_ARGUMENT_LENGTH 128
 #define MAX_ARGUMENTS 32
 
 int main(void)
 {
-    char line[MAX_ARGUMENT_LENGTH * MAX_ARGUMENTS];
+    char *line = NULL;
     char *args[MAX_ARGUMENTS];
     int argc;
     int read_len;
+    char *err_mesg = "Shell:";
+    char *command;
     size_t len = MAX_ARGUMENT_LENGTH * MAX_ARGUMENTS;
     const char *prompt = "$ ";
 
@@ -22,7 +24,8 @@ int main(void)
                write(STDOUT_FILENO, prompt, qb_strlen(prompt));
         }
 
-        if ((read_len = getline(&line, &len, stdin)) == -1)
+        read_len = getline(&line, &len, stdin);
+	if (read_len == -1)
         {
             free(line);
             exit(EXIT_SUCCESS);
@@ -34,7 +37,7 @@ int main(void)
         argc = 0;
         parse_cmd(line, args, &argc);
 
-        char *command = args[0];
+        command = args[0];
 
         switch (command[0])
         {
@@ -43,12 +46,12 @@ int main(void)
                     print_environment();
                 break;
             case 'b':
-                if (qb_strcmp(command, "exit") == 0 && argc == 2)
+                if (qb_strcmp(command, "exit") == 0)
                     qb_exit(args);
                 break;
             default:
                 if (argc == 1)
-                    execute_command(args, err_msg);
+                    execute_command(args, err_mesg);
                 break;
         }
     }

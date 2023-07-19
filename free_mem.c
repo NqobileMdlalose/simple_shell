@@ -7,7 +7,7 @@
  * @args: arguments
  * Returns: 0
  */
-void free_mem(*args[])
+void free_mem(char *args[])
 {
 	int i;
 
