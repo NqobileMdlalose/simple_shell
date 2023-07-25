@@ -25,7 +25,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 	}
 	qb_strcpy(command_copy, line);
 	*argc = 0;
-	token = strtok(command_copy, delimiter);
+	token = qb_strtok(command_copy, delimiter);
 
 	while (token != NULL && *argc < (MAX_ARGUMENTS))
 	{
@@ -43,7 +43,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 		}
 		qb_strcpy(args[*argc], token);
 		(*argc)++;
-		token = strtok(NULL, delimiter);
+		token = qb_strtok(NULL, delimiter);
 	}
 	args[*argc] = NULL;
 	free(command_copy);

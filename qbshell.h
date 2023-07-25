@@ -2,6 +2,8 @@
 #define _QBSHELL_H
 extern char **environ;
 
+char *qb_strchr(char *str, int chr);
+char *qb_strtok(char *str, const char *delim);
 void free_mem(char *args[]);
 void run_shell(void);
 void qb_exit(char **args);
