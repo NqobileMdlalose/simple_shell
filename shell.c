@@ -25,7 +25,7 @@ void run_shell(void)
 			write(STDOUT_FILENO, prompt, qb_strlen(prompt));
 		fflush(stdout);
 
-		read_len = qb_getline(&line, &len, stdin);
+		read_len = qb_getline(&line, &len, stdin); /* Change back to getline */
 		if (read_len == -1)
 		{
 			free(line);

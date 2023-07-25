@@ -9,6 +9,9 @@
  * @err_mesg: error messege
  * Return: void
  */
+
+/* We need to find a way to get the execute command to process ; and && and ||*/
+
 void execute_command(char *argv[], char *err_mesg)
 {
 	pid_t pid;

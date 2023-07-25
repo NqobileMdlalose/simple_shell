@@ -7,7 +7,7 @@
 #include "qbshell.h"
 
 #define BUFFER_SIZE 1024
-
+/* Just checked, we cannot use getline :(*/
 
 int qb_getline(char** line, size_t* len, FILE* stream) 
 {
