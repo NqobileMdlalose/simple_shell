@@ -35,7 +35,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 			perror("Parse Command Input: Memory allocation error");
 			for (i = 0; args[i] != NULL; i++)
 			{
-				free(args);
+				free(args[i]);
 			}
 			free(args);
 			free(command_copy);
