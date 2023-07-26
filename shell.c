@@ -43,7 +43,10 @@ void run_shell(int argc, char *argv[])
 	const char *prompt = "$ ";
 	const char *new_prompt = "\n";
 
-	handle_non_interactive(argc, argv);
+	if (argc > 1)
+	{
+		handle_non_interactive(argc, argv);
+	}
 	while (1)
 	{
 		if (interactive_mode && isatty(STDIN_FILENO))
