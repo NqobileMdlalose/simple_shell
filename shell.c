@@ -1,27 +1,52 @@
 #include "qbshell.h"
+#include <stdbool.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #define MAX_COMMAND_LENGTH 100
+/**
+ * handle_non_interactive - handles the non interactive mode
+ * @argc: argument count
+ * @argv: argument vector
+ */
+void handle_non_interactive(int argc, char *argv[])
+{
+	int fd;
 
+	if (argc > 1)
+	{
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
+		{
+			perror("Error opening input file");
+			exit(EXIT_FAILURE);
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+}
 /**
  * run_shell - runs the shell.
+ * @argc: argument count
+ * @argv: argument vector
  */
-void run_shell(void)
+void run_shell(int argc, char *argv[])
 {
-	int argc;
+	bool interactive_mode = true;
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read_len;
 	char *args[MAX_COMMAND_LENGTH];
-	char *err_mesg = "Shell";
+	char *err_mesg = argv[0];
 	const char *prompt = "$ ";
 	const char *new_prompt = "\n";
 
+	handle_non_interactive(argc, argv);
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
+		if (interactive_mode && isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, prompt, qb_strlen(prompt));
 		fflush(stdout);
 
@@ -29,7 +54,8 @@ void run_shell(void)
 		if (read_len == -1)
 		{
 			free(line);
-			write(STDOUT_FILENO, new_prompt, qb_strlen(new_prompt));
+			if (interactive_mode)
+				write(STDOUT_FILENO, new_prompt, qb_strlen(new_prompt));
 			exit(EXIT_SUCCESS);
 		}
 

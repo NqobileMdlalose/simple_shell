@@ -2,10 +2,12 @@
 
 /**
  * main - Entry point
- * Return: void
+ * @argc: argument count
+ * @argv: argument vector
+ * Return: 0
  */
-int main(void)
+int main(int argc, char *argv[])
 {
-	run_shell();
+	run_shell(argc, argv);
 	return (0);
 }
