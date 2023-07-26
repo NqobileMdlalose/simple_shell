@@ -40,12 +40,15 @@ void run_shell(int argc, char *argv[])
 	if (!interactive_mode)
 	{
 		handle_non_interactive(argv[1]);
+		return;
 	}
 	while (1)
 	{
-		if (interactive_mode && isatty(STDIN_FILENO))
+		if (isatty(STDIN_FILENO))
+		{
 			write(STDOUT_FILENO, prompt, qb_strlen(prompt));
-		fflush(stdout);
+			fflush(stdout);
+		}
 		read_len = getline(&line, &len, stdin);
 		if (read_len == -1)
 		{
@@ -56,13 +59,14 @@ void run_shell(int argc, char *argv[])
 			line[read_len - 1] = '\0';
 		argc = 0;
 		parse_cmd(line, args, &argc);
-		if (strcmp(args[0], "env") == 0)
-			print_environment();
-		else if (strcmp(args[0], "exit") == 0)
-			qb_exit(args);
-		else if (argc >= 1)
-			execute_command(args, err_mesg);
-		if (!interactive_mode)
-			break;
+		if (argc >= 1)
+		{
+			if (strcmp(args[0], "env") == 0)
+				print_environment();
+			else if (strcmp(args[0], "exit") == 0)
+				qb_exit(args);
+			else
+				execute_command(args, err_mesg);
+		}
 	}
 }

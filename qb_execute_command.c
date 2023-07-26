@@ -35,9 +35,11 @@ void execute_command(char *argv[], char *err_mesg)
 	else if (pid == 0)
 	{
 		/** Child process **/
-		execve(argv[0], argv, environ);
-		perror(err_mesg);
-		exit(EXIT_FAILURE);
+		if (execve(argv[0], argv, environ) == -1)
+		{
+			perror(err_mesg);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
