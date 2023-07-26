@@ -13,7 +13,7 @@ char *qb_strchr(char *str, int chr);
 char *qb_strtok(char *str, const char *delim);
 void free_mem(char *args[]);
 void run_shell(int argc, char *argv[]);
-void handle_non_interactive(int argc, char *argv[]);
+void handle_non_interactive(char *input);
 void qb_exit(char **args);
 void parse_cmd(const char *line, char *args[], int *argc);
 int qb_strcmp(const char *str1, const char *str2);
