@@ -68,9 +68,9 @@ void run_shell(int argc, char *argv[])
 		{
 			if (qb_strcmp(args[0], "env") == 0)
 				print_environment();
-			else if (qb_strcmp(args[0], "exit") == 0)
+			if (qb_strcmp(args[0], "exit") == 0)
 				qb_exit(args);
-			else
+			if (argc >= 1 && (qb_strcmp(args[0], "env") != 0))
 				execute_command(args, err_mesg);
 		}
 	}
