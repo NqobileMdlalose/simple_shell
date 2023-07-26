@@ -41,7 +41,7 @@ void run_shell(int argc, char *argv[])
 	{
 		handle_non_interactive(argv[1]);
 	}
-	while (1 && interactive_mode)
+	while (1)
 	{
 		if (interactive_mode && isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, prompt, qb_strlen(prompt));
