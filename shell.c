@@ -64,14 +64,11 @@ void run_shell(int argc, char *argv[])
 			line[read_len - 1] = '\0';
 		argc = 0;
 		parse_cmd(line, args, &argc);
-		if (argc >= 1)
-		{
-			if (qb_strcmp(args[0], "env") == 0)
-				print_environment();
-			if (qb_strcmp(args[0], "exit") == 0)
-				qb_exit(args);
-			if (argc >= 1 && (qb_strcmp(args[0], "env") != 0))
-				execute_command(args, err_mesg);
-		}
+		if (qb_strcmp(args[0], "env") == 0)
+			print_environment();
+		if (qb_strcmp(args[0], "exit") == 0)
+			qb_exit(args);
+		if (argc >= 1 && (qb_strcmp(args[0], "env") != 0))
+			execute_command(args, err_mesg);
 	}
 }
