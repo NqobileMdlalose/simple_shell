@@ -41,15 +41,18 @@ void run_shell(int argc, char *argv[])
 	{
 		handle_non_interactive(argv[1]);
 	}
-	while (1)
+	while (1 && interactive_mode)
 	{
 		if (interactive_mode && isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, prompt, qb_strlen(prompt));
 		fflush(stdout);
 		read_len = getline(&line, &len, stdin);
 		if (read_len == -1)
-			break;
-		if (!interactive_mode && line[read_len - 1] == '\n')
+		{
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
+		if (line[read_len - 1] == '\n')
 			line[read_len - 1] = '\0';
 		argc = 0;
 		parse_cmd(line, args, &argc);
@@ -61,10 +64,5 @@ void run_shell(int argc, char *argv[])
 			execute_command(args, err_mesg);
 		if (!interactive_mode)
 			break;
-	}
-	if (!interactive_mode)
-	{
-		free(line);
-		exit(EXIT_SUCCESS);
 	}
 }
