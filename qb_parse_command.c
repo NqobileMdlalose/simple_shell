@@ -13,9 +13,13 @@
 void parse_cmd(const char *line, char *args[], int *argc)
 {
 	char *token, *command_copy = NULL;
-	const char *delimiter = " \n";
 	size_t line_length = qb_strlen(line);
 	int i;
+
+	if (line_length == 0)
+	{
+		return;
+	}
 
 	command_copy = (char *)malloc(line_length + 1);
 	if (command_copy == NULL)
@@ -25,9 +29,9 @@ void parse_cmd(const char *line, char *args[], int *argc)
 	}
 	qb_strcpy(command_copy, line);
 	*argc = 0;
-	token = qb_strtok(command_copy, delimiter);
+	token = qb_strtok(command_copy, " ");
 
-	while (token != NULL && *argc < (MAX_ARGUMENTS))
+	while (token != NULL && *argc < (MAX_ARGUMENTS - 1))
 	{
 		args[*argc] = (char *)malloc(qb_strlen(token) + 1);
 		if (args[*argc] == NULL)
@@ -43,8 +47,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 		}
 		qb_strcpy(args[*argc], token);
 		(*argc)++;
-		token = qb_strtok(NULL, delimiter);
+		token = qb_strtok(NULL, " ");
 	}
 	args[*argc] = NULL;
-	free(command_copy);
 }

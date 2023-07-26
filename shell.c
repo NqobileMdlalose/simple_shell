@@ -8,19 +8,31 @@
 #define MAX_COMMAND_LENGTH 100
 /**
  * handle_non_interactive - handles the non interactive mode
- * @input: input file
+ * @argv: argument vector
+ * @argc: argc count
  */
-void handle_non_interactive(char *input)
+void handle_non_interactive(char *argv[], int argc)
 {
-	int fd = open(input, O_RDONLY);
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read_len;
+	char *err_mesg = argv[0];
+	char *args[MAX_COMMAND_LENGTH];
 
-	if (fd == -1)
+	errno = ENOENT;
+	while ((read_len = getline(&line, &len, stdin)) != 1 && read_len != EOF)
 	{
-		perror("Error opening input file");
-		exit(EXIT_FAILURE);
+		if (line[read_len - 1] == '\n')
+			line[read_len - 1] = '\0';
+		parse_cmd(line, args, &argc);
+		if (qb_strcmp(args[0], "env") == 0)
+			print_environment();
+		if (qb_strcmp(args[0], "exit") == 0)
+			qb_exit(args);
+		if (argc >= 1)
+			execute_command(args, err_mesg);
 	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	free(line);
 }
 /**
  * run_shell - runs the shell.
@@ -29,7 +41,6 @@ void handle_non_interactive(char *input)
  */
 void run_shell(int argc, char *argv[])
 {
-	bool interactive_mode = true;
 	char *line = NULL;
 	size_t len = 0;
 	char *args[MAX_COMMAND_LENGTH];
@@ -37,11 +48,6 @@ void run_shell(int argc, char *argv[])
 	const char *prompt = "$ ";
 	ssize_t read_len;
 
-	if (!interactive_mode)
-	{
-		handle_non_interactive(argv[1]);
-		return;
-	}
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -61,9 +67,9 @@ void run_shell(int argc, char *argv[])
 		parse_cmd(line, args, &argc);
 		if (argc >= 1)
 		{
-			if (strcmp(args[0], "env") == 0)
+			if (qb_strcmp(args[0], "env") == 0)
 				print_environment();
-			else if (strcmp(args[0], "exit") == 0)
+			else if (qb_strcmp(args[0], "exit") == 0)
 				qb_exit(args);
 			else
 				execute_command(args, err_mesg);

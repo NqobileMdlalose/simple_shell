@@ -8,6 +8,9 @@
  */
 int main(int argc, char *argv[])
 {
-	run_shell(argc, argv);
+	if (argc == 1)
+		run_shell(argc, argv);
+	else
+		handle_non_interactive(argv, argc);
 	return (0);
 }
