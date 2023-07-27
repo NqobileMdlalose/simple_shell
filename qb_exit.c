@@ -24,7 +24,7 @@ void qb_exit(char **args)
 	}
 	else
 	{
-		system("Exit command failure");
+		perror("Exit Error");
 		exit(EXIT_FAILURE);
 	}
 }
