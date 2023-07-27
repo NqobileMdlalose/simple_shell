@@ -50,4 +50,5 @@ void parse_cmd(const char *line, char *args[], int *argc)
 		token = qb_strtok(NULL, " ");
 	}
 	args[*argc] = NULL;
+	free(command_copy);
 }
