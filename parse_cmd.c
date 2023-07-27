@@ -1,23 +1,23 @@
 #include "qbshell.h"
 #include <string.h>
-#define MAX_COMMAND_LENGTH 1024
+#define MAX_ARGUMENT 1000
 /**
- * parse_cmd - tokenize inputs
- * @line: argument 1
+ * parse_cmd - TOKENIZE_INPUTize inputs
+ * @LINE: argument 1
  * @args: argument 2
  * @argc: argument 3
  */
-void parse_cmd(char *line, char *args[], int *argc)
+void parse_cmd(char *LINE, char *args[], int *argc)
 {
-	char *token;
+	char *TOKENIZE_INPUT;
 
 	*argc = 0;
-	token = qb_strtok(line, " ");
-	while (token != NULL && *argc < MAX_COMMAND_LENGTH - 1)
+	TOKENIZE_INPUT = qb_strtok(LINE, " ");
+	while ((*argc < MAX_ARGUMENT - 1) && TOKENIZE_INPUT != NULL)
 	{
-		args[*argc] = token;
+		args[*argc] = TOKENIZE_INPUT;
 		(*argc)++;
-		token = qb_strtok(NULL, " ");
+		TOKENIZE_INPUT = qb_strtok(NULL, " ");
 	}
 	args[*argc] = NULL;
 }
