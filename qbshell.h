@@ -15,7 +15,7 @@ void free_mem(char *args[]);
 void run_shell(int argc, char *argv[]);
 void handle_non_interactive(char *argv[], int argc);
 void qb_exit(char **args);
-void parse_cmd(const char *line, char *args[], int *argc);
+void parse_cmd(char *line, char *args[], int *argc);
 int qb_strcmp(const char *str1, const char *str2);
 void execute_command(char *args[], char *err_mesg);
 char *qb_strcpy(char *dest, const char *src);
