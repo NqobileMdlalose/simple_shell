@@ -29,9 +29,9 @@ void handle_non_interactive(char *argv[], int argc)
 		if (qb_strcmp(args[0], "exit") == 0 && argc == 2)
 			qb_exit(args);
 		if (argc >= 1 && qb_strcmp(args[0], "env") != 0)
-			execute_command(args, err_mesg);
+			execute_command(args, err_mesg);	
+		free(line);
 	}
-	free(line);
 }
 /**
  * run_shell - runs the shell.

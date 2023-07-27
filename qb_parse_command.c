@@ -18,6 +18,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 
 	if (line_length == 0)
 	{
+		*argc = 0;
 		return;
 	}
 
@@ -31,7 +32,7 @@ void parse_cmd(const char *line, char *args[], int *argc)
 	*argc = 0;
 	token = qb_strtok(command_copy, " ");
 
-	while (token != NULL && *argc < (MAX_ARGUMENTS - 1))
+	while (token != NULL && *argc < (MAX_ARGUMENTS))
 	{
 		args[*argc] = (char *)malloc(qb_strlen(token) + 1);
 		if (args[*argc] == NULL)
@@ -41,7 +42,6 @@ void parse_cmd(const char *line, char *args[], int *argc)
 			{
 				free(args[i]);
 			}
-			free(args);
 			free(command_copy);
 			return;
 		}
