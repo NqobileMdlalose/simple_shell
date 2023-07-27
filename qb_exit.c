@@ -22,4 +22,9 @@ void qb_exit(char **args)
 			exit(EXIT_SUCCESS);
 		}
 	}
+	else
+	{
+		perror("Exit Error");
+		exit(EXIT_FAILURE);
+	}
 }
